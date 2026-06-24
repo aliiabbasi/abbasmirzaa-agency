@@ -46,7 +46,7 @@
     </div>
     <form id="contactForm" onsubmit="return cmSubmit(event)">
       <div class="field"><label>نام و نام خانوادگی</label><input type="text" name="نام" required placeholder="نام شما"></div>
-      <div class="field"><label>ایمیل</label><input type="email" name="ایمیل" required placeholder="email@example.com"></div>
+      <div class="field"><label>شماره تماس</label><input type="tel" name="تلفن" required placeholder="۰۹۱۲۳۴۵۶۷۸۹" pattern="[0-9۰-۹+ -](8,)"></div>
       <div class="field"><label>موضوع</label><input type="text" name="موضوع" placeholder="درباره چه خدمتی صحبت کنیم؟"></div>
       <div class="field"><label>پیام</label><textarea name="پیام" rows="4" required placeholder="پیام خود را بنویسید..."></textarea></div>
       <input type="hidden" name="_subject" value="پیام جدید از سایت عباس میرزا">
@@ -57,23 +57,32 @@
   </div>
 </section>
 <script>
+var TG_TOKEN="8936143119:AAGm7xkFWwrOKZmlgGh4LJlH5ptppkPh4Bk";
+var TG_CHAT="134767036";
 async function cmSubmit(e){
   e.preventDefault();
   var form=e.target, note=document.getElementById('formNote');
   var btn=form.querySelector('button[type=submit]'), old=btn.textContent;
   btn.disabled=true; btn.textContent='در حال ارسال...';
+  var f=new FormData(form);
+  var text="📩 پیام جدید از سایت عباس میرزا\n\n"+
+    "👤 نام: "+(f.get('نام')||'-')+"\n"+
+    "📞 شماره تماس: "+(f.get('تلفن')||'-')+"\n"+
+    "🏷️ موضوع: "+(f.get('موضوع')||'-')+"\n"+
+    "💬 پیام:\n"+(f.get('پیام')||'-');
   try{
-    var res=await fetch('https://formsubmit.co/ajax/aliakbar.abbasi9@gmail.com',{
+    var res=await fetch("https://api.telegram.org/bot"+TG_TOKEN+"/sendMessage",{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(Object.fromEntries(new FormData(form)))
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TG_CHAT,text:text})
     });
-    if(!res.ok) throw new Error('bad');
+    var data=await res.json();
+    if(!data.ok) throw new Error('bad');
     note.textContent='✓ پیام شما با موفقیت ارسال شد. به‌زودی با شما تماس می‌گیریم!';
     note.style.color='#16a34a'; note.style.fontWeight='700';
     form.reset();
   }catch(err){
-    note.textContent='✗ ارسال ناموفق بود. لطفاً مستقیم ایمیل بزنید: aliakbar.abbasi9@gmail.com';
+    note.textContent='✗ ارسال ناموفق بود. لطفاً مستقیم تماس بگیرید: ۰۹۱۲۷۲۹۶۶۵۸';
     note.style.color='#dc2626'; note.style.fontWeight='700';
   }finally{ btn.disabled=false; btn.textContent=old; }
   return false;
