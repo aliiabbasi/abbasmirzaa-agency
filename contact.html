@@ -44,16 +44,41 @@
         <div><b>لینکدین</b><span>linkedin.com/company/abbasmirzaa-agency</span></div>
       </a>
     </div>
-    <form onsubmit="return submitForm(event)">
-      <div class="field"><label>نام و نام خانوادگی</label><input type="text" required placeholder="نام شما"></div>
-      <div class="field"><label>ایمیل</label><input type="email" required placeholder="email@example.com"></div>
-      <div class="field"><label>موضوع</label><input type="text" placeholder="درباره چه خدمتی صحبت کنیم؟"></div>
-      <div class="field"><label>پیام</label><textarea rows="4" required placeholder="پیام خود را بنویسید..."></textarea></div>
+    <form id="contactForm" onsubmit="return cmSubmit(event)">
+      <div class="field"><label>نام و نام خانوادگی</label><input type="text" name="نام" required placeholder="نام شما"></div>
+      <div class="field"><label>ایمیل</label><input type="email" name="ایمیل" required placeholder="email@example.com"></div>
+      <div class="field"><label>موضوع</label><input type="text" name="موضوع" placeholder="درباره چه خدمتی صحبت کنیم؟"></div>
+      <div class="field"><label>پیام</label><textarea name="پیام" rows="4" required placeholder="پیام خود را بنویسید..."></textarea></div>
+      <input type="hidden" name="_subject" value="پیام جدید از سایت عباس میرزا">
+      <input type="hidden" name="_template" value="table">
       <button class="btn btn-primary" type="submit">ارسال پیام ←</button>
       <p class="form-note" id="formNote">پاسخ معمولاً در کمتر از ۲۴ ساعت ارسال می‌شود.</p>
     </form>
   </div>
 </section>
+<script>
+async function cmSubmit(e){
+  e.preventDefault();
+  var form=e.target, note=document.getElementById('formNote');
+  var btn=form.querySelector('button[type=submit]'), old=btn.textContent;
+  btn.disabled=true; btn.textContent='در حال ارسال...';
+  try{
+    var res=await fetch('https://formsubmit.co/ajax/aliakbar.abbasi9@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(Object.fromEntries(new FormData(form)))
+    });
+    if(!res.ok) throw new Error('bad');
+    note.textContent='✓ پیام شما با موفقیت ارسال شد. به‌زودی با شما تماس می‌گیریم!';
+    note.style.color='#16a34a'; note.style.fontWeight='700';
+    form.reset();
+  }catch(err){
+    note.textContent='✗ ارسال ناموفق بود. لطفاً مستقیم ایمیل بزنید: aliakbar.abbasi9@gmail.com';
+    note.style.color='#dc2626'; note.style.fontWeight='700';
+  }finally{ btn.disabled=false; btn.textContent=old; }
+  return false;
+}
+</script>
 <footer>
   <div class="container">
     <div class="foot-grid">
