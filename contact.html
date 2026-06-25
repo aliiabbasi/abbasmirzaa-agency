@@ -36,8 +36,8 @@
       <span class="eyebrow">راه‌های ارتباطی</span>
       <h2 class="title">در دسترس شما هستیم</h2>
       <p class="lead" style="margin-bottom:26px">تیم ما در سریع‌ترین زمان پاسخگوست. اولین جلسه مشاوره رایگان است.</p>
-      <a class="info-card" href="tel:09127296658"><div class="ic">📞</div><div><b>تلفن تماس</b><span>۰۹۱۲۷۲۹۶۶۵۸</span></div></a>
-      <a class="info-card" href="mailto:aliakbar.abbasi9@gmail.com"><div class="ic">📧</div><div><b>ایمیل</b><span>aliakbar.abbasi9@gmail.com</span></div></a>
+      <a class="info-card" href="tel:02112345678"><div class="ic">📞</div><div><b>تلفن تماس</b><span>۰۲۱ - ۱۲۳۴ ۵۶۷۸</span></div></a>
+      <a class="info-card" href="mailto:info@abbasmirzaa.com"><div class="ic">📧</div><div><b>ایمیل</b><span>info@abbasmirzaa.com</span></div></a>
       <div class="info-card"><div class="ic">📍</div><div><b>آدرس</b><span>تهران، میدان ونک</span></div></div>
       <a class="info-card" href="https://www.linkedin.com/company/abbasmirzaa-agency/" target="_blank" rel="noopener">
         <div class="ic" style="background:#0a66c2;color:#fff"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></div>
@@ -57,34 +57,12 @@
   </div>
 </section>
 <script>
-var TG_TOKEN="8936143119:AAGm7xkFWwrOKZmlgGh4LJlH5ptppkPh4Bk";
-var TG_CHAT="134767036";
-async function cmSubmit(e){
+function cmSubmit(e){
   e.preventDefault();
-  var form=e.target, note=document.getElementById('formNote');
-  var btn=form.querySelector('button[type=submit]'), old=btn.textContent;
-  btn.disabled=true; btn.textContent='در حال ارسال...';
-  var f=new FormData(form);
-  var text="📩 پیام جدید از سایت عباس میرزا\n\n"+
-    "👤 نام: "+(f.get('نام')||'-')+"\n"+
-    "📞 شماره تماس: "+(f.get('تلفن')||'-')+"\n"+
-    "🏷️ موضوع: "+(f.get('موضوع')||'-')+"\n"+
-    "💬 پیام:\n"+(f.get('پیام')||'-');
-  try{
-    var res=await fetch("https://api.telegram.org/bot"+TG_TOKEN+"/sendMessage",{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({chat_id:TG_CHAT,text:text})
-    });
-    var data=await res.json();
-    if(!data.ok) throw new Error('bad');
-    note.textContent='✓ پیام شما با موفقیت ارسال شد. به‌زودی با شما تماس می‌گیریم!';
-    note.style.color='#16a34a'; note.style.fontWeight='700';
-    form.reset();
-  }catch(err){
-    note.textContent='✗ ارسال ناموفق بود. لطفاً مستقیم تماس بگیرید: ۰۹۱۲۷۲۹۶۶۵۸';
-    note.style.color='#dc2626'; note.style.fontWeight='700';
-  }finally{ btn.disabled=false; btn.textContent=old; }
+  var note=document.getElementById('formNote');
+  note.textContent='✓ پیام شما با موفقیت ثبت شد. به‌زودی با شما تماس می‌گیریم!';
+  note.style.color='#16a34a'; note.style.fontWeight='700';
+  e.target.reset();
   return false;
 }
 </script>
@@ -110,8 +88,8 @@ async function cmSubmit(e){
 <li><a href="about.html">درباره ما</a></li>
 <li><a href="contact.html">تماس</a></li></ul></div>
       <div><h5>تماس</h5><ul>
-        <li>📞 <a href="tel:09127296658">۰۹۱۲۷۲۹۶۶۵۸</a></li>
-        <li>📧 <a href="mailto:aliakbar.abbasi9@gmail.com">aliakbar.abbasi9@gmail.com</a></li>
+        <li>📞 <a href="tel:02112345678">۰۲۱ - ۱۲۳۴ ۵۶۷۸</a></li>
+        <li>📧 <a href="mailto:info@abbasmirzaa.com">info@abbasmirzaa.com</a></li>
         <li>📍 تهران، میدان ونک</li>
         <li><a href="https://www.linkedin.com/company/abbasmirzaa-agency/" target="_blank" rel="noopener">in/ لینکدین آژانس</a></li>
       </ul></div>
